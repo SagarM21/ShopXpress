@@ -1,4 +1,6 @@
 import 'package:amazon/constants/global_variables.dart';
+import 'package:amazon/features/auth/screens/auth_screen.dart';
+import 'package:amazon/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,24 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Amazon',
-      theme: ThemeData(
-        scaffoldBackgroundColor: GlobalVariables.backgroundColor,
-        colorScheme:
-            const ColorScheme.light(primary: GlobalVariables.secondaryColor),
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          iconTheme: IconThemeData(color: Colors.black),
+        title: 'Amazon',
+        theme: ThemeData(
+          scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+          colorScheme:
+              const ColorScheme.light(primary: GlobalVariables.secondaryColor),
+          appBarTheme: const AppBarTheme(
+            elevation: 0,
+            iconTheme: IconThemeData(color: Colors.black),
+          ),
         ),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('hello'),
-        ),
-        body: const Center(
-          child: Text('hi'),
-        ),
-      ),
-    );
+        onGenerateRoute: (settings) => generateRoute(settings),
+        home: const AuthScreen());
   }
 }
