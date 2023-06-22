@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:amazon/common/widgets/bottom_bar.dart';
 import 'package:amazon/constants/error_handling.dart';
@@ -68,6 +69,8 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      print(res);
+      print('hi');
       httpErrorHandle(
         response: res,
         context: context,
