@@ -69,8 +69,6 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-      print(res);
-      print('hi');
       httpErrorHandle(
         response: res,
         context: context,
