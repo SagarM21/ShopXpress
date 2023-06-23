@@ -1,34 +1,47 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon/common/widgets/loader.dart';
 import 'package:amazon/constants/global_variables.dart';
 import 'package:amazon/features/home/widgets/address_box.dart';
-import 'package:amazon/features/home/widgets/deal_of_day.dart';
-import 'package:amazon/features/home/widgets/top_categories.dart';
-import 'package:amazon/features/search/screens/search_screen.dart';
-import 'package:amazon/providers/user_provider.dart';
+import 'package:amazon/features/search/services/search_services.dart';
+import 'package:amazon/features/search/widgets/searched_product.dart';
+import 'package:amazon/models/product.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../widgets/carousel_image.dart';
-
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home';
-  const HomeScreen({super.key});
+class SearchScreen extends StatefulWidget {
+  static const String routeName = '/search-screen';
+  final String searchQuery;
+  const SearchScreen({
+    Key? key,
+    required this.searchQuery,
+  }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
+  List<Product>? products;
+  final SearchServices searchServices = SearchServices();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchSearchedProduct();
+  }
+
+  fetchSearchedProduct() async {
+    products = await searchServices.fetchSearchedProduct(
+        context: context, searchQuery: widget.searchQuery);
+    setState(() {});
+    print(products);
+  }
+
   void navigateToSearchScreen(String query) {
-    Navigator.pushNamed(
-      context,
-      SearchScreen.routeName,
-      arguments: query,
-    );
+    Navigator.pushNamed(context, SearchScreen.routeName, arguments: query);
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -102,18 +115,27 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        child: Column(
-          children: [
-            AddressBox(),
-            SizedBox(height: 10),
-            TopCategories(),
-            SizedBox(height: 10),
-            CarouselImage(),
-            DealOfDay(),
-          ],
-        ),
-      ),
+      body: products == null
+          ? const Loader()
+          : Column(
+              children: [
+                const AddressBox(),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: products!.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {},
+                        child: SearchedProduct(
+                          product: products![index],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
     );
   }
 }
