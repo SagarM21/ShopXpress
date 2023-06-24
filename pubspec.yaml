@@ -44,6 +44,7 @@ dependencies:
   file_picker: ^5.3.2
   cloudinary_public: ^0.21.0
   flutter_rating_bar: ^4.0.1
+  pay: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -70,6 +71,8 @@ flutter:
   assets:
     - .env
     - assets/images/
+    - assets/gpay.json
+    - assets/applepay.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
