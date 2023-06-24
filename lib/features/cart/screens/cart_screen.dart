@@ -1,5 +1,6 @@
 import 'package:amazon/common/widgets/custom_button.dart';
 import 'package:amazon/constants/global_variables.dart';
+import 'package:amazon/features/address/screen/address_screen.dart';
 import 'package:amazon/features/cart/widgets/cart_product.dart';
 import 'package:amazon/features/cart/widgets/cart_subtotal.dart';
 import 'package:amazon/features/home/widgets/address_box.dart';
@@ -110,7 +111,12 @@ class _CartScreenState extends State<CartScreen> {
               padding: const EdgeInsets.all(8.0),
               child: CustomButton(
                 text: 'Proceed to Buy (${user.cart.length} items)',
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    AddressScreen.routeName,
+                  );
+                },
                 color: Colors.yellow[600],
               ),
             ),
