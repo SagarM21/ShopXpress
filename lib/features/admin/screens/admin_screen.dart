@@ -44,7 +44,6 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                 alignment: Alignment.topLeft,
@@ -55,17 +54,27 @@ class _AdminScreenState extends State<AdminScreen> {
                   color: Colors.black,
                 ),
               ),
-              const Text(
-                'Admin',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Row(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Text(
+                        'Admin',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => accountServices.logOut(context),
+                      child: const Icon(Icons.logout),
+                    ),
+                  ],
                 ),
-              ),
-              InkWell(
-                onTap: () => accountServices.logOut(context),
-                child: const Icon(Icons.logout),
-              ),
+              )
             ],
           ),
         ),
