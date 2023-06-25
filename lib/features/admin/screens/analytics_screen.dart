@@ -1,12 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+
 import 'package:amazon/common/widgets/loader.dart';
 import 'package:amazon/features/admin/models/sales.dart';
 import 'package:amazon/features/admin/services/admin_services.dart';
 import 'package:amazon/features/admin/widgets/category_products_chart.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:flutter/material.dart';
 
 class AnalyticsScreen extends StatefulWidget {
-  const AnalyticsScreen({Key? key}) : super(key: key);
+  const AnalyticsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<AnalyticsScreen> createState() => _AnalyticsScreenState();
@@ -43,16 +47,14 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(
-                height: 250,
-                child: CategoryProductsChart(seriesList: [
-                  charts.Series(
-                    id: 'Sales',
-                    data: earnings!,
-                    domainFn: (Sales sales, _) => sales.label,
-                    measureFn: (Sales sales, _) => sales.earning,
-                  ),
-                ]),
+              AspectRatio(
+                aspectRatio: 2,
+                child: BarChart(
+                  BarChartData(),
+                  swapAnimationDuration:
+                      const Duration(milliseconds: 150), // Optional
+                  swapAnimationCurve: Curves.linear,
+                ),
               )
             ],
           );
