@@ -63,6 +63,7 @@ class ProductDetailsServices {
         response: res,
         context: context,
         onSuccess: () {
+          showSnackBar(context, 'Product added successfully!');
           User user =
               userProvider.user.copyWith(cart: jsonDecode(res.body)['cart']);
           userProvider.setUserFromModel(user);
