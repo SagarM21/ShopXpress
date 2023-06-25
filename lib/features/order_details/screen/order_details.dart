@@ -35,12 +35,22 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   }
 
   // !!! ONLY FOR ADMIN!!!
-  void changeOrderStatus(int status) {}
+  void changeOrderStatus(int status) {
+    adminServices.changeOrderStatus(
+      context: context,
+      status: status + 1,
+      order: widget.order,
+      onSuccess: () {
+        setState(() {
+          currentStep += 1;
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<UserProvider>(context).user;
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
