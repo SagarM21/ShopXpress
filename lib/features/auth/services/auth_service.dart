@@ -5,6 +5,7 @@ import 'package:amazon/common/widgets/bottom_bar.dart';
 import 'package:amazon/constants/error_handling.dart';
 import 'package:amazon/constants/global_variables.dart';
 import 'package:amazon/constants/utils.dart';
+import 'package:amazon/features/admin/screens/admin_screen.dart';
 import 'package:amazon/features/home/screens/home_screen.dart';
 import 'package:amazon/models/user.dart';
 import 'package:amazon/providers/user_provider.dart';
@@ -70,6 +71,7 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      // ignore: use_build_context_synchronously
       httpErrorHandle(
         response: res,
         context: context,
@@ -78,11 +80,15 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            BottomBar.routeName,
-            (route) => false,
-          );
+          if (context.mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              jsonDecode(res.body)['type'] == 'admin'
+                  ? AdminScreen.routeName
+                  : BottomBar.routeName,
+              (route) => false,
+            );
+          }
         },
       );
     } catch (e) {
