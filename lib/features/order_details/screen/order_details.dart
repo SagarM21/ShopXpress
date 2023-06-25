@@ -32,6 +32,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
   void initState() {
     super.initState();
     currentStep = widget.order.status;
+    print(currentStep);
   }
 
   // !!! ONLY FOR ADMIN!!!
@@ -224,10 +225,11 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 child: Stepper(
                   currentStep: currentStep,
                   controlsBuilder: (context, details) {
-                    if (user.type == 'admin') {
+                    if (user.type == 'admin' && currentStep != 3) {
                       return CustomButton(
                         text: 'Done',
                         onTap: () => changeOrderStatus(details.currentStep),
+                        color: GlobalVariables.secondaryColor,
                       );
                     }
                     return const SizedBox();
@@ -268,8 +270,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                       content: const Text(
                         'Your order has been delivered and signed by you!',
                       ),
-                      isActive: currentStep >= 3,
-                      state: currentStep >= 3
+                      isActive: currentStep == 3,
+                      state: currentStep == 3
                           ? StepState.complete
                           : StepState.indexed,
                     ),
