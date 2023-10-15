@@ -1,4 +1,4 @@
-# Amazon - E-Commerce Flutter App
+# ShopXpress - E-Commerce Flutter App
 
 Built using MongoDB, Nodejs, Cloudinary, Express, Flutter, Provider.
 
